@@ -380,7 +380,7 @@ export const steps: Step = {
           description: '1. Получаем список всех магазинов с остатками',
           code: (
             <span className={styles.comment}>
-              {' // TODO: реализовать бизнес-логику'}
+              {'        // TODO: реализовать поиск ближайшего магазина'}
             </span>
           ),
         },

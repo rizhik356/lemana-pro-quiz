@@ -36,7 +36,12 @@ const Kotlin = () => {
       <div className={styles.win}>
         <h1>{`Поздравляю!\nВы победили`}</h1>
         <div className={styles.code}>
-          <span>{steps.kotlin[currentQuiz].result}</span>
+          <div className={styles.terminalButtons}>
+            <span></span>
+          </div>
+          <span className={styles.quiz}>
+            {steps.kotlin[currentQuiz].result}
+          </span>
         </div>
         <button className={'btn'} onClick={() => navigate('/')}>
           На главную
@@ -46,7 +51,7 @@ const Kotlin = () => {
   }
   if (result === 'lose') {
     return (
-      <div className={styles.win}>
+      <div className={`${styles.win} ${styles.full}`}>
         <h1>Вы проиграли</h1>
         <button className={'btn'} onClick={() => navigate('/')}>
           На главную
@@ -58,7 +63,10 @@ const Kotlin = () => {
     result === 'default' && (
       <div className={styles.container}>
         <div className={styles.code}>
-          <span>{steps.kotlin[currentQuiz].quiz}</span>
+          <div className={styles.terminalButtons}>
+            <span></span>
+          </div>
+          <span className={styles.quiz}>{steps.kotlin[currentQuiz].quiz}</span>
           {steps.kotlin[currentQuiz].params[currentStep].code}
           <span className={styles.footer}>{`    }
 }`}</span>

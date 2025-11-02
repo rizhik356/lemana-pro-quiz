@@ -28,19 +28,6 @@
   margin: auto;
   gap: 2rem;
   justify-content: space-around;
-  .code {
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: start;
-    white-space: pre-wrap;
-    .comment {
-      color: #d4d4d4;
-    }
-    .footer {
-      align-self: start;
-    }
-  }
   .radio_container {
     display: flex;
     justify-content: center;
@@ -127,7 +114,10 @@
   white-space: pre-wrap;
   gap: 1rem;
   h1 {
-    margin-top: 0;
+    margin: 0;
+  }
+  &.full {
+    height: 100%;
   }
 }
 
@@ -138,5 +128,121 @@
   justify-content: center;
   h2 {
     text-align: center;
+  }
+}
+
+
+.code {
+  background: #1e1e1e;
+  color: #f0f0f0;
+  padding: 2rem;
+  border-radius: 12px;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border: 1px solid #333;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+
+  // Заголовок терминала (как в macOS)
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: linear-gradient(to bottom, #e0e0e0, #d0d0d0);
+    border-radius: 12px 12px 0 0;
+    border-bottom: 1px solid #b0b0b0;
+  }
+
+  // Кнопки закрыть, свернуть, развернуть
+  &::after {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 50px;
+    height: 12px;
+    display: flex;
+    gap: 6px;
+  }
+
+  // Кнопки (красная, желтая, зеленая)
+  .terminalButtons {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    display: flex;
+    gap: 6px;
+
+    &::before,
+    &::after {
+      content: '';
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    &::before {
+      background: #ff5f57; // Красная
+    }
+
+    &::after {
+      background: #ffbd2e; // Желтая
+      margin-left: 12px;
+    }
+
+    span {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #28ca42; // Зеленая
+      margin-left: 12px;
+    }
+  }
+
+  // Контент кода (с отступом от заголовка)
+  .quiz {
+    margin-top: 30px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .comment {
+    color: #6a9955; // Зеленый как в VS Code для комментариев
+    font-style: italic;
+  }
+
+  .keyword {
+    color: #569cd6; // Синий для ключевых слов
+  }
+
+  .function {
+    color: #dcdcaa; // Желтый для функций
+  }
+
+  .string {
+    color: #ce9178; // Оранжевый для строк
+  }
+
+  .type {
+    color: #4ec9b0; // Бирюзовый для типов
+  }
+
+  .footer {
+    align-self: start;
+    color: #f0f0f0;
+  }
+
+  // Эффект свечения при фокусе
+  &:hover {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
   }
 }
