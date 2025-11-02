@@ -182,5 +182,324 @@ export const steps: Step = {
         },
       ],
     },
+    {
+      quiz:
+        'class DiscountCalculator(\n' +
+        '    private val loyaltyService: LoyaltyService\n' +
+        ') {\n' +
+        '    fun calculate(total: Double, cardNumber: String?): Double {\n' +
+        '        // TODO: реализовать логику расчёта скидки\n' +
+        '    }\n' +
+        '}\n',
+      result:
+        'class DiscountCalculator(\n' +
+        '    private val loyaltyService: LoyaltyService\n' +
+        ') {\n' +
+        '    fun calculate(total: Double, cardNumber: String?): Double {\n' +
+        '        if (cardNumber == null) return total\n' +
+        '        val discount = loyaltyService.getDiscount(cardNumber)\n' +
+        '        val safeDiscount = min(discount, 0.3)\n' +
+        '        val result = total * (1 - safeDiscount)\n' +
+        '        return max(0.0, "%.2f".format(result).toDouble())\n' +
+        '    }\n' +
+        '}\n',
+      params: [
+        {
+          answers: [
+            {
+              id: 'A',
+              value: 'A',
+              text: 'if (total == 0.0) return 0.0',
+            },
+            {
+              id: 'B',
+              value: 'B',
+              text: 'if (cardNumber == null) return total',
+              correct: true,
+            },
+            {
+              id: 'C',
+              value: 'C',
+              text: 'if (cardNumber != null) return total',
+            },
+          ],
+          description: '1. Проверяем наличие карты',
+          code: (
+            <span className={styles.comment}>
+              {' // TODO: реализовать бизнес-логику'}
+            </span>
+          ),
+        },
+        {
+          answers: [
+            {
+              id: 'A',
+              value: 'A',
+              text: 'val discount = loyaltyService.getDiscount(cardNumber)',
+              correct: true,
+            },
+            {
+              id: 'B',
+              value: 'B',
+              text: 'val discount = 0.3',
+            },
+            {
+              id: 'C',
+              value: 'C',
+              text: 'val discount = Random.nextDouble()',
+            },
+          ],
+          description: '2. Получаем процент скидки',
+          code: <span>{'        if (cardNumber == null) return total'}</span>,
+        },
+        {
+          answers: [
+            {
+              id: 'A',
+              value: 'A',
+              text: 'val safeDiscount = discount',
+            },
+            {
+              id: 'B',
+              value: 'B',
+              text: 'val safeDiscount = max(discount, 0.3)',
+            },
+            {
+              id: 'C',
+              value: 'C',
+              text: 'val safeDiscount = min(discount, 0.3)',
+              correct: true,
+            },
+          ],
+          description: '3. Ограничиваем скидку максимум 30%',
+          code: (
+            <span>{`        if (cardNumber == null) return total
+        val discount = loyaltyService.getDiscount(cardNumber)
+`}</span>
+          ),
+        },
+        {
+          answers: [
+            {
+              id: 'A',
+              value: 'A',
+              text: 'val result = total * (1 - safeDiscount)',
+              correct: true,
+            },
+            {
+              id: 'B',
+              value: 'B',
+              text: 'val result = total - safeDiscount',
+            },
+            {
+              id: 'C',
+              value: 'C',
+              text: 'val result = safeDiscount * 100',
+            },
+          ],
+          description: '4. Применяем скидку к заказу',
+          code: (
+            <span>{`if (cardNumber == null) return total
+        val discount = loyaltyService.getDiscount(cardNumber)
+        val safeDiscount = min(discount, 0.3)
+`}</span>
+          ),
+        },
+        {
+          answers: [
+            {
+              id: 'A',
+              value: 'A',
+              text: 'return result',
+            },
+            {
+              id: 'B',
+              value: 'B',
+              text: 'return max(0.0, "%.2f".format(result).toDouble())',
+              correct: true,
+            },
+            {
+              id: 'C',
+              value: 'C',
+              text: 'return -abs(result)',
+            },
+          ],
+          description: '5. Корректируем и округляем итог',
+          code: (
+            <span>{`        if (cardNumber == null) return total
+        val discount = loyaltyService.getDiscount(cardNumber)
+        val safeDiscount = min(discount, 0.3)
+        val result = total * (1 - safeDiscount)
+`}</span>
+          ),
+        },
+      ],
+    },
+    {
+      quiz: `class StoreFinder(
+    private val stockService: StockService,
+    private val geoService: GeoService
+) {
+    fun findNearest(productId: String, userLocation: Location): Store? {
+`,
+      result:
+        'class StoreFinder(\n' +
+        '    private val stockService: StockService,\n' +
+        '    private val geoService: GeoService\n' +
+        ') {\n' +
+        '    fun findNearest(productId: String, userLocation: Location): Store? {\n' +
+        '        val stores = stockService.storesWithProduct(productId)\n' +
+        '        if (stores.isEmpty()) return null\n' +
+        '        val storesWithDistance = stores.map { it to geoService.distance(userLocation, it.location) }\n' +
+        '        val nearest = storesWithDistance.minWithOrNull(\n' +
+        '            compareBy<Pair<Store, Double>> { it.second }.thenByDescending { it.first.stock }\n' +
+        '        )\n' +
+        '        return nearest?.first\n' +
+        '    }\n' +
+        '}\n',
+      params: [
+        {
+          answers: [
+            {
+              id: 'A',
+              value: 'A',
+              text: 'val stores = stockService.storesWithProduct(productId)',
+              correct: true,
+            },
+            {
+              id: 'B',
+              value: 'B',
+              text: 'val stores = emptyList<Store>()',
+            },
+            {
+              id: 'C',
+              value: 'C',
+              text: 'val stores = geoService.allStores()',
+            },
+          ],
+          description: '1. Получаем список всех магазинов с остатками',
+          code: (
+            <span className={styles.comment}>
+              {' // TODO: реализовать бизнес-логику'}
+            </span>
+          ),
+        },
+        {
+          answers: [
+            {
+              id: 'A',
+              value: 'A',
+              text: 'if (stores.isEmpty()) return null',
+              correct: true,
+            },
+            {
+              id: 'B',
+              value: 'B',
+              text: 'if (stores.size < 100) return null',
+            },
+            {
+              id: 'C',
+              value: 'C',
+              text: 'if (stores.size > 0) return null',
+            },
+          ],
+          description: '2. Проверяем, что список не пуст',
+          code: (
+            <span>
+              {'        val stores = stockService.storesWithProduct(productId)'}
+            </span>
+          ),
+        },
+        {
+          answers: [
+            {
+              id: 'A',
+              value: 'A',
+              text: 'val storesWithDistance = stores.map { it to Random.nextDouble() }',
+            },
+            {
+              id: 'B',
+              value: 'B',
+              text: 'val storesWithDistance = stores',
+            },
+            {
+              id: 'C',
+              value: 'C',
+              text: 'val storesWithDistance = stores.map { it to geoService.distance(userLocation, it.location) }',
+              correct: true,
+            },
+          ],
+          description: '3. Считаем расстояние от пользователя',
+          code: (
+            <span>
+              {'        val stores = stockService.storesWithProduct(productId)\n' +
+                '        if (stores.isEmpty()) return null\n'}
+            </span>
+          ),
+        },
+        {
+          answers: [
+            {
+              id: 'A',
+              value: 'A',
+              text: 'val nearest = storesWithDistance.first()',
+            },
+            {
+              id: 'B',
+              value: 'B',
+              text:
+                'val nearest = storesWithDistance.minWithOrNull(\n' +
+                '       compareBy<Pair<Store, Double>> { it.second }.thenByDescending { it.first.stock })\n',
+              correct: true,
+            },
+            {
+              id: 'C',
+              value: 'C',
+              text: 'val nearest = storesWithDistance.last()',
+            },
+          ],
+          description:
+            '4. Выбираем ближайший магазин, при равенстве — с большим остатком',
+          code: (
+            <span>
+              {'        val stores = stockService.storesWithProduct(productId)\n' +
+                '        if (stores.isEmpty()) return null\n' +
+                '        val storesWithDistance = stores.map { it to geoService.distance(userLocation, it.location) }\n'}
+            </span>
+          ),
+        },
+        {
+          answers: [
+            {
+              id: 'A',
+              value: 'A',
+              text: 'return nearest?.first',
+              correct: true,
+            },
+            {
+              id: 'B',
+              value: 'B',
+              text: 'return null',
+            },
+            {
+              id: 'C',
+              value: 'C',
+              text: 'return Store()',
+            },
+          ],
+          description: '5. Возвращаем магазин',
+          code: (
+            <span>
+              {'        val stores = stockService.storesWithProduct(productId)\n' +
+                '        if (stores.isEmpty()) return null\n' +
+                '        val storesWithDistance = stores.map { it to geoService.distance(userLocation, it.location) }\n' +
+                '        val nearest = storesWithDistance.minWithOrNull(\n' +
+                '            compareBy<Pair<Store, Double>> { it.second }.thenByDescending { it.first.stock }\n' +
+                '        )\n'}
+            </span>
+          ),
+        },
+      ],
+    },
   ],
 }

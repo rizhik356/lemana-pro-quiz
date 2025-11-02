@@ -78,9 +78,7 @@ const Kotlin = () => {
                       onChange={() => handleAnswerChange(answer)}
                       className={styles.radio_input}
                     />
-                    <span className={styles.answerText}>
-                      <strong>{answer.value})</strong> {answer.text}
-                    </span>
+                    <span className={styles.answerText}>{answer.text}</span>
                   </div>
                 ),
               )}
