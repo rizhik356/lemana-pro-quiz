@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: center;
   .btn {
-    width: 10vw;
+    width: 200px;
   }
   .desc_container {
     display: flex;
@@ -15,6 +15,7 @@
     span {
       color: black;
       font-size: 2rem;
+      text-align: center;
     }
     .btn_container {
       display: flex;

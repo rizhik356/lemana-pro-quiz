@@ -36,10 +36,16 @@ const Start = () => {
             >
               Kotlin
             </button>
-            <button className={`btn ${styles.btn}`} onClick={handleStartClick}>
+            <button
+              className={`btn ${styles.btn}`}
+              onClick={() => handleLanguageClick('/go')}
+            >
               Go
             </button>
-            <button className={`btn ${styles.btn}`} onClick={handleStartClick}>
+            <button
+              className={`btn ${styles.btn}`}
+              onClick={() => handleLanguageClick('/type-script')}
+            >
               TypeScript
             </button>
           </div>
