@@ -18,7 +18,7 @@ const Quiz = ({ steps }: { steps: RecordStep }) => {
     setSelectedAnswer(answer)
   }
   const handlePost = async () => {
-    await axios.post('http://82.202.169.113/params', {
+    await axios.post('http://82.202.169.113/devices/params', {
       id: 1,
       parentId: 1,
       params: { power: true },
