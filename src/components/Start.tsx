@@ -1,6 +1,7 @@
 import styles from '../scss/start.module.scss'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 const Start = () => {
   const [isStarted, setIsStarted] = useState<boolean>(true)
@@ -16,7 +17,17 @@ const Start = () => {
     }
   }, [])
 
+  const lightOff = async () => {
+    await axios.post('http://82.202.169.113/params', {
+      id: 1,
+      parentId: 1,
+      params: { power: false },
+    })
+    return
+  }
+
   const handleLanguageClick = (path: string) => {
+    lightOff()
     navigate(path)
   }
 

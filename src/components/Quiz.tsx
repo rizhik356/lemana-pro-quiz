@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { type RecordStep } from '../constants/steps.tsx'
 import styles from '../scss/quiz.module.scss'
 import type { Answer } from './Kotlin.tsx'
+import axios from 'axios'
 
 const Quiz = ({ steps }: { steps: RecordStep }) => {
   const [selectedAnswer, setSelectedAnswer] = useState<Answer | null>(null)
@@ -16,12 +17,20 @@ const Quiz = ({ steps }: { steps: RecordStep }) => {
   const handleAnswerChange = (answer: Answer) => {
     setSelectedAnswer(answer)
   }
+  const handlePost = async () => {
+    await axios.post('http://82.202.169.113/params', {
+      id: 1,
+      parentId: 1,
+      params: { power: true },
+    })
+    return
+  }
 
   const handleSubmit = () => {
     if (selectedAnswer?.correct) {
       if (currentStep === steps[currentQuiz].params.length - 1) {
         setResult('win')
-        return
+        return handlePost()
       }
       setSelectedAnswer(null)
       setCurrentStep(currentStep + 1)

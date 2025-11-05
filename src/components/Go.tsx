@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import styles from '../scss/quiz.module.scss'
 import type { Answer } from './Kotlin.tsx'
 import { steps } from '../constants/steps.tsx'
+import axios from 'axios'
 
 const Go = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<Answer | null>(null)
@@ -17,11 +18,20 @@ const Go = () => {
     setSelectedAnswer(answer)
   }
 
+  const handlePost = async () => {
+    await axios.post('http://82.202.169.113/params', {
+      id: 1,
+      parentId: 1,
+      params: { power: false },
+    })
+    return
+  }
+
   const handleSubmit = () => {
     if (selectedAnswer?.correct) {
       if (currentStep === steps.go[currentQuiz].params.length - 1) {
         setResult('win')
-        return
+        return handlePost()
       }
       setSelectedAnswer(null)
       setCurrentStep(currentStep + 1)
