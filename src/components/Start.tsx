@@ -18,7 +18,7 @@ const Start = () => {
   }, [])
 
   const lightOff = async () => {
-    await axios.post('http://82.202.169.113/devices/params', {
+    await axios.post('http://82.202.169.113/api/devices/params', {
       id: 1,
       parentId: 1,
       params: { power: false },
