@@ -21,7 +21,7 @@ const Quiz = ({ steps }: { steps: RecordStep }) => {
     await axios.post('http://82.202.169.113/api/devices/params', {
       id: 1,
       parentId: 1,
-      params: { power: true },
+      power: true,
     })
     return
   }
